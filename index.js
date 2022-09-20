@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/hello', (req, res) => {
-	res.json({wow: 'world'})
+	res.json({awesome: 'world'})
 })
 
 app.listen(PORT, () => {
