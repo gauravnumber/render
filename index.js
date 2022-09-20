@@ -8,6 +8,10 @@ app.get('/', (req, res) => {
 	res.json({hello: 'world'})
 })
 
+app.get('/hello', (req, res) => {
+	res.json({wow: 'world'})
+})
+
 app.listen(PORT, () => {
 	console.log(`Server running at ${PORT}`)
 })
