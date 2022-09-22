@@ -51,7 +51,7 @@ app.get("/weather", async (req, res) => {
       sender,
       to: receivers,
       // subject: `random ${Math.floor(Math.random() * 11)}`,
-      subject: "Tomorrow will be raining.",
+      subject: `Tomorrow will be raining. ${new Date()}`,
       // textContent: `Time is ${new Date()}. ${list}`,
       textContent: `
         It may be {{params.description}}.
