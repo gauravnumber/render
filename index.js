@@ -68,6 +68,11 @@ app.get("/weather", async (req, res) => {
     .catch(console.log);
 
   console.log(tomorrow);
+  console.log("process.env.WEATHER_URL", process.env.WEATHER_URL);
+  console.log("process.env.SENDER_EMAIL", process.env.SENDER_EMAIL);
+  console.log("process.env.RECEIVER_EMAIL", process.env.RECEIVER_EMAIL);
+  console.log("process.env.SENDINBLUE_API_KEY", process.env.SENDINBLUE_API_KEY);
+
   res.json(list);
 });
 
