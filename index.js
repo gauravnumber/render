@@ -44,17 +44,13 @@ app.get("/weather", async (req, res) => {
     },
   ];
 
-  // console.log(JSON.stringify(list, null, 2));
-
   tranEmailApi
     .sendTransacEmail({
       sender,
       to: receivers,
-      // subject: `random ${Math.floor(Math.random() * 11)}`,
-      subject: `Tomorrow will be raining. ${new Date()}`,
-      // textContent: `Time is ${new Date()}. ${list}`,
+      subject: `Tomorrow will be raining.`,
       textContent: `
-        It may be {{params.description}}.
+        It may be {{params.description}}. Chances of raining is {{params.percentage}}%
         `,
       // htmlContent: `
       //   <h1>Cules Coding</h1>
@@ -62,17 +58,13 @@ app.get("/weather", async (req, res) => {
       //           `,
       params: {
         description: tomorrow.weather.description,
+        percentage: tomorrow.pop,
       },
     })
     .then(console.log)
     .catch(console.log);
 
   console.log(tomorrow);
-  console.log("process.env.WEATHER_URL", process.env.WEATHER_URL);
-  console.log("process.env.SENDER_EMAIL", process.env.SENDER_EMAIL);
-  console.log("process.env.RECEIVER_EMAIL", process.env.RECEIVER_EMAIL);
-  console.log("process.env.SENDINBLUE_API_KEY", process.env.SENDINBLUE_API_KEY);
-
   res.json(list);
 });
 
