@@ -64,8 +64,6 @@ app.get("/weather", async (req, res) => {
       })
       .then(console.log)
       .catch(console.log);
-
-    console.log(tomorrow);
   }
 
   res.json(list);
