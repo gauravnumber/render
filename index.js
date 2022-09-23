@@ -49,7 +49,7 @@ app.get("/weather", async (req, res) => {
       .sendTransacEmail({
         sender,
         to: receivers,
-        subject: `Tomorrow will be raining.`,
+        subject: `Rain Alert`,
         textContent: `
         It may be {{params.description}}. Chances of raining is {{params.percentage}}%
         `,
