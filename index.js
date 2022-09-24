@@ -1,12 +1,16 @@
 const express = require("express");
 const axios = require("axios");
 const Sib = require("sib-api-v3-sdk");
+const helmet = require("helmet");
+const morgan = require("morgan");
 
 require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+app.use(helmet());
+app.use(morgan("tiny"));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
@@ -67,6 +71,39 @@ app.get("/weather", async (req, res) => {
   }
 
   res.json(list);
+});
+
+app.get("/anime", async (req, res) => {
+  const { data } = await axios.get("https://animechan.vercel.app/api/random");
+
+  const client = Sib.ApiClient.instance;
+  const apiKey = client.authentications["api-key"];
+  apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
+
+  const tranEmailApi = new Sib.TransactionalEmailsApi();
+
+  const sender = {
+    email: process.env.SENDER_EMAIL,
+    name: "Anime",
+  };
+
+  const receivers = [
+    {
+      email: process.env.RECEIVER_EMAIL,
+    },
+  ];
+
+  const email = await tranEmailApi
+    .sendTransacEmail({
+      sender,
+      to: receivers,
+      subject: data.anime,
+      textContent: `
+        ${data.quote}.
+        `,
+    });
+
+  res.json(email);
 });
 
 app.listen(PORT, () => {
