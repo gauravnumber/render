@@ -49,7 +49,7 @@ app.get("/weather", async (req, res) => {
       },
     ];
 
-    tranEmailApi
+    const email = await tranEmailApi
       .sendTransacEmail({
         sender,
         to: receivers,
@@ -65,12 +65,11 @@ app.get("/weather", async (req, res) => {
           description: tomorrow.weather.description,
           percentage: tomorrow.pop,
         },
-      })
-      .then(console.log)
-      .catch(console.log);
+      });
+    res.json(email);
   }
 
-  res.json(list);
+  res.json({ weather: "work" });
 });
 
 app.get("/anime", async (req, res) => {
