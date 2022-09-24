@@ -49,27 +49,32 @@ app.get("/weather", async (req, res) => {
       },
     ];
 
-    const email = await tranEmailApi
-      .sendTransacEmail({
-        sender,
-        to: receivers,
-        subject: `Rain Alert`,
-        textContent: `
+    try {
+      const email = await tranEmailApi
+        .sendTransacEmail({
+          sender,
+          to: receivers,
+          subject: `Rain Alert`,
+          textContent: `
         It may be {{params.description}}. Chances of raining is {{params.percentage}}%
         `,
-        // htmlContent: `
-        //   <h1>Cules Coding</h1>
-        //   <a href="https://cules-coding.vercel.app/">Visit</a>
-        //           `,
-        params: {
-          description: tomorrow.weather.description,
-          percentage: tomorrow.pop,
-        },
-      });
-    res.json(email);
-  }
+          // htmlContent: `
+          //   <h1>Cules Coding</h1>
+          //   <a href="https://cules-coding.vercel.app/">Visit</a>
+          //           `,
+          params: {
+            description: tomorrow.weather.description,
+            percentage: tomorrow.pop,
+          },
+        });
 
-  res.json({ weather: "work" });
+      res.json(email);
+    } catch (error) {
+      console.error(error);
+    }
+  } else {
+    res.json({ weather: "work" });
+  }
 });
 
 app.get("/anime", async (req, res) => {
